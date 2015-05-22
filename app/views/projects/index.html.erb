@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+
+<h1>
+  Listing Projects
+  <span class='pull-right'>
+    <%= link_to 'New Project', new_project_path %>
+  </span>
+</h1>
+
+<div class='clearfix'>
+  <% @projects.each do |project| %>
+    <div class='col-md-6 project'>
+      <%= link_to project.title, project %>
+      <%= link_to 'Edit', edit_project_path(project) %>
+    </div>
+  <% end %>
+</div>
+
+<div class='clearfix'>
+</div>
+
+
