@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  resources :tasks
+  devise_for :users
+  
   resources :tasks, :projects
   root 'projects#index'
   # The priority is based upon order of creation: first created -> highest priority.
