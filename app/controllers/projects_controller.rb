@@ -17,6 +17,7 @@ class ProjectsController < ApplicationController
 
   
   def edit
+   @users=User.all
   end
 
   
@@ -36,6 +37,7 @@ class ProjectsController < ApplicationController
 
   
   def update
+    raise project_params
     respond_to do |format|
       if @project.update(project_params)
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
@@ -64,6 +66,6 @@ class ProjectsController < ApplicationController
 
     
     def project_params
-      params.require(:project).permit(:title, :user_id)
+      params.require(:project).permit(:title, :user_id,:owner_id)
     end
 end
