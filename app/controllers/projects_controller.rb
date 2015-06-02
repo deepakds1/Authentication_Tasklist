@@ -1,9 +1,11 @@
 class ProjectsController < ApplicationController
   before_action :set_project, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!
   
   def index
-    @projects = current_user.projects
+
+    @projects = Project.all
+
   end
 
   
@@ -12,18 +14,24 @@ class ProjectsController < ApplicationController
 
   
   def new
+
     @project = Project.new
+
   end
 
   
   def edit
-   @users=User.all
+
+    @users=User.all
+
   end
 
   
   def create
     @project = Project.new(project_params)
-
+    
+    @users = User.where(:id => params[:contributing_team])
+    @project.users << @users
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
@@ -37,9 +45,14 @@ class ProjectsController < ApplicationController
 
   
   def update
-    raise project_params
+   
+    @project = Project.find(params[:id])
+    @users = User.where(:id => params[:contributing_team])
+    @project.users.destroy_all   
+    @project.users << @users
     respond_to do |format|
-      if @project.update(project_params)
+      if @project.save
+      
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
         format.json { render :show, status: :ok, location: @project }
       else
@@ -59,13 +72,13 @@ class ProjectsController < ApplicationController
   end
 
   private
-   
+    
     def set_project
       @project = Project.find(params[:id])
     end
 
     
     def project_params
-      params.require(:project).permit(:title, :user_id,:owner_id)
+      params.require(:project).permit(:name, :user_id, :task_id,:owner_id)
     end
 end

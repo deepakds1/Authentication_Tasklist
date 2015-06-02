@@ -1,11 +1,11 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
-
   
+  def index
     @tasks = Task.all
   end
 
- 
+  
   def show
   end
 
@@ -46,7 +46,7 @@ class TasksController < ApplicationController
     end
   end
 
- 
+  
   def destroy
     @task.destroy
     respond_to do |format|
@@ -63,6 +63,6 @@ class TasksController < ApplicationController
 
     
     def task_params
-      params.require(:task).permit(:title, :description, :project_id)
+      params.require(:task).permit(:name, :project_id)
     end
 end

@@ -17,8 +17,7 @@
     <%= f.label :title %><br>
     <%= f.text_field :title %><br>
     <%= f.label :contributors%><br>
-    <%= select_tag 'project[contributors]', options_from_collection_for_select(@users, :id, :email),multiple:true%>
-
+    <%= select_tag "contributing_team", options_from_collection_for_select(User.all, 'id', 'email',@project.users.map{ |j| j.id }), :multiple => true %>
 
   </div>
   <div class="actions">
